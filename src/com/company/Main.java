@@ -45,10 +45,13 @@ public class Main {
                     occurrences.put(word, oldCount + 1);
                 }
             }
-
+            /*
             for (String word : occurrences.keySet()) {
                 System.out.println(word + " " + occurrences.get(word));
             }
+            */
+
+            System.out.println(Collections.max(occurrences.keySet()) + " " +Collections.max(occurrences.values()));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
