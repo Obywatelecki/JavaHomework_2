@@ -2,42 +2,37 @@ package com.company;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        File f = new File("D:\\Java\\JavaHomework_2\\python.html");
+        File f = new File("D:\\data1.txt");
 
         try (
                 FileReader fr = new FileReader(f);
                 BufferedReader bfr = new BufferedReader(fr)
         ) {
 
-            String htmlPage = null;
+            String txt = null;
             StringBuilder sb = new StringBuilder();
 
-            while ((htmlPage = bfr.readLine()) != null) {
-                sb.append(htmlPage);
+            while ((txt = bfr.readLine()) != null) {
+                sb.append(txt);
             }
 
-            htmlPage = sb.toString().replaceAll("<[^>]*>", " ");
-            String htmlWords[] = htmlPage.split(" ");
+            String words[] = sb.toString().split(" ");
 
             Map<String, Integer> occurrences = new HashMap<>();
 
-            for (String word : htmlWords) {
-                if (word.length() > 3) {
+            for (String word : words) {
+                if (word.length() > 1) {
                     Integer oldCount = occurrences.get(word);
                     if (oldCount == null) {
                         oldCount = 0;
@@ -45,20 +40,22 @@ public class Main {
                     occurrences.put(word, oldCount + 1);
                 }
             }
-            /*
-            for (String word : occurrences.keySet()) {
-                System.out.println(word + " " + occurrences.get(word));
+            for (Map.Entry<String, Integer> entry : occurrences.entrySet()) {
+                System.out.println(entry.getKey() + " " + entry.getValue());
+
             }
-            */
 
-            System.out.println(Collections.max(occurrences.keySet()) + " " +Collections.max(occurrences.values()));
+            int maxVal = Collections.max(occurrences.values());
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            for (Map.Entry<String, Integer> entry : occurrences.entrySet()) {
+                if (entry.getValue() == maxVal) {
+                    System.out.println("\nA najczestsze slowo to: ");
+                    System.out.println(entry.getKey() + " " + entry.getValue());
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }
